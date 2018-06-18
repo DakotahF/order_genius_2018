@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_18_112747) do
+ActiveRecord::Schema.define(version: 2018_06_18_114515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plperl"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2018_06_18_112747) do
     t.bigint "restaurant_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "price", null: false
     t.index ["name", "restaurant_id"], name: "index_menu_items_on_name_and_restaurant_id", unique: true
     t.index ["restaurant_id"], name: "index_menu_items_on_restaurant_id"
   end
@@ -38,8 +39,8 @@ ActiveRecord::Schema.define(version: 2018_06_18_112747) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.bigint "restaurant_id"
-    t.string "customer_email"
+    t.bigint "restaurant_id", null: false
+    t.string "customer_email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["restaurant_id"], name: "index_orders_on_restaurant_id"
