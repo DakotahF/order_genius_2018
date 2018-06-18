@@ -27,12 +27,13 @@ ActiveRecord::Schema.define(version: 2018_06_18_112747) do
   end
 
   create_table "order_menu_items", force: :cascade do |t|
-    t.bigint "order_id"
-    t.bigint "menu_item_id"
-    t.integer "quantity"
+    t.bigint "order_id", null: false
+    t.bigint "menu_item_id", null: false
+    t.integer "quantity", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["menu_item_id"], name: "index_order_menu_items_on_menu_item_id"
+    t.index ["order_id", "menu_item_id"], name: "index_order_menu_items_on_order_id_and_menu_item_id", unique: true
     t.index ["order_id"], name: "index_order_menu_items_on_order_id"
   end
 
