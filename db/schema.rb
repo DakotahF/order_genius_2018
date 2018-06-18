@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_15_143346) do
+ActiveRecord::Schema.define(version: 2018_06_18_112747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plperl"
@@ -26,6 +26,24 @@ ActiveRecord::Schema.define(version: 2018_06_15_143346) do
     t.index ["restaurant_id"], name: "index_menu_items_on_restaurant_id"
   end
 
+  create_table "order_menu_items", force: :cascade do |t|
+    t.bigint "order_id"
+    t.bigint "menu_item_id"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["menu_item_id"], name: "index_order_menu_items_on_menu_item_id"
+    t.index ["order_id"], name: "index_order_menu_items_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "restaurant_id"
+    t.string "customer_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_orders_on_restaurant_id"
+  end
+
   create_table "restaurants", force: :cascade do |t|
     t.string "name", null: false
     t.string "phone", null: false
@@ -36,4 +54,7 @@ ActiveRecord::Schema.define(version: 2018_06_15_143346) do
   end
 
   add_foreign_key "menu_items", "restaurants"
+  add_foreign_key "order_menu_items", "menu_items"
+  add_foreign_key "order_menu_items", "orders"
+  add_foreign_key "orders", "restaurants"
 end
